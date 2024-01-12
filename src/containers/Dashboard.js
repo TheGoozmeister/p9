@@ -13,6 +13,7 @@ export const filteredBills = (data, status) => {
       // in jest environment
       if (typeof jest !== 'undefined') {
         selectCondition = (bill.status === status)
+        console.log(selectCondition)
       }
       /* istanbul ignore next */
       else {
@@ -21,6 +22,8 @@ export const filteredBills = (data, status) => {
         selectCondition =
           (bill.status === status) &&
           ![...USERS_TEST, userEmail].includes(bill.email)
+          console.log(selectCondition)
+
       }
 
       return selectCondition
@@ -146,6 +149,8 @@ export default class {
     }
 
     bills.forEach(bill => {
+      //On utilise la méthode off() sur le click pour que la méthode handleEditTicket soit réinitialisé à chaque nouveau clic sur un ticket
+      $(`#open-bill${bill.id}`).off("click");
       $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
     })
 

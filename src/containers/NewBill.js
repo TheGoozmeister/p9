@@ -25,7 +25,11 @@ export default class NewBill {
     formData.append('file', file)
     formData.append('email', email)
 
-    this.store
+    const approvedExtensions = ["jpg", "jpeg", "png"];
+    const fileExtension = fileName.split(".").pop().toLowerCase();
+
+    if (approvedExtensions.includes(fileExtension)) {
+      this.store
       .bills()
       .create({
         data: formData,
@@ -39,6 +43,14 @@ export default class NewBill {
         this.fileUrl = fileUrl
         this.fileName = fileName
       }).catch(error => console.error(error))
+    } else {
+      e.preventDefault();
+      e.target.setCustomValidity("Formats acceptés : jpg, jpeg et png")
+      e.target.reportValidity()
+      e.target.value = null;
+    }
+
+    
   }
   handleSubmit = e => {
     e.preventDefault()
